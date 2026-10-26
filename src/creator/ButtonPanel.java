@@ -14,7 +14,7 @@ import game.StageOne;
 
 public class ButtonPanel extends JPanel {
 
-	private Button[] buttonsBlock, buttonsEnemies;
+	private Button[] buttonsBlock, buttonsEnemies, buttons;
 
 	public ButtonPanel(Panel p) {
 		super();
@@ -22,6 +22,8 @@ public class ButtonPanel extends JPanel {
 		setMaximumSize(new Dimension(1000,200));
 		buttonsBlock = new Button[BlockType.values().length];
 		buttonsEnemies = new Button[EnemyType.values().length];
+		buttons = new Button[ButtonType.values().length];
+		
 
 		for(int i=0;i<buttonsBlock.length;i++) {
 			buttonsBlock[i] = new Button(BlockType.values()[i], p);
@@ -32,6 +34,12 @@ public class ButtonPanel extends JPanel {
 			buttonsEnemies[i] = new Button(EnemyType.values()[i], p);
 			add(buttonsEnemies[i]);
 		}
+		
+		
+		for(int i=0;i<buttons.length;i++) {
+			buttons[i] = new Button(ButtonType.values()[i], p);
+			add(buttons[i]);
+		}		
 	}
 
 }

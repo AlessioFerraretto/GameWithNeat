@@ -9,19 +9,35 @@ import game.EnemyType;
 
 public class Button extends JButton {
 
-	public Button(BlockType b, SelectEvent se) {
+	public Button(BlockType b, PanelEvent pe) {
 		super(b.name());
-		
+
 		addActionListener(e->{
-			se.selected(new Block(0,0,b,null));
+			pe.selected(new Block(0,0,b,null));
 		});
 	}
-	
-	public Button(EnemyType b, SelectEvent se) {
+
+	public Button(EnemyType b, PanelEvent pe) {
 		super(b.name());
-		
+
 		addActionListener(e->{
-			se.selected(new Enemy(null,0,0,b,null));
+			pe.selected(new Enemy(null,0,0,b,null));
 		});
 	}
+
+	public Button(ButtonType b, PanelEvent pe) {
+		super(b.name());
+
+		addActionListener(e->{
+			switch (b) {
+			case PRINT_STAGE:
+				pe.printStage();
+				break;
+			case PRINT_ENEMIES:
+				pe.printEnemies();
+			}
+		});
+
+	}
+
 }

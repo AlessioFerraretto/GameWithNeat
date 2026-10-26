@@ -333,11 +333,10 @@ public abstract class Stage {
 	}
 
 	public void sostituisci(int i, int j, BaseActor selected) {
-		selected.setX(i * Block.BLOCK_SIZE);
-		selected.setY(j * Block.BLOCK_SIZE);
-		selected.setStage(this);
+		int x = i * Block.BLOCK_SIZE;
+		int y = j * Block.BLOCK_SIZE;
 		if(selected instanceof Block) {
-			blocksMatrix[i][j] = (Block) selected;
+			blocksMatrix[i][j] = (Block) new Block(x, y, selected.getBlockType(), this);
 			blocks = new ArrayList<>();
 			for(Block[] row : blocksMatrix) {
 				for(Block el : row) {
@@ -346,9 +345,9 @@ public abstract class Stage {
 					}
 				}
 			}
-			
+
 		} else {
-			enemiesMatrix[i][j] = (Enemy) selected;
+			enemiesMatrix[i][j] = new Enemy(this, x, y, ((Enemy) selected).getEnemyType(), ((Enemy) selected).getEnemyMovement());
 			enemies = new ArrayList<>();
 			for(Enemy[] row : enemiesMatrix) {
 				for(Enemy el : row) {
@@ -357,6 +356,51 @@ public abstract class Stage {
 					}
 				}
 			}
+		}
+	}
+
+	public void printStage() {
+		int width = blocksMatrix.length;
+		int height = blocksMatrix[0].length;
+
+		System.out.println(width + " " + height);
+
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
+				if (blocksMatrix[i][j] != null && blocksMatrix[i][j].getBlockType() != null) {
+					System.out.print(blocksMatrix[i][j].getBlockType().getValue());
+				} else {
+					System.out.print("0"); 
+				}
+
+				if (i < width - 1) {
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
+		}
+
+	}
+	
+	public void printEnemies() {
+		int width = enemiesMatrix.length;
+		int height = enemiesMatrix[0].length;
+
+		System.out.println(width + " " + height);
+
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
+				if (enemiesMatrix[i][j] != null && enemiesMatrix[i][j].getEnemyType() != null) {
+					System.out.print(enemiesMatrix[i][j].getEnemyType().getValue());
+				} else {
+					System.out.print("0"); 
+				}
+
+				if (i < width - 1) {
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
 		}
 	}
 }

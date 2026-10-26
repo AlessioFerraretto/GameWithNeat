@@ -8,6 +8,8 @@ import neat.Input;
 public class Enemy extends Actor {
 	
 	protected EnemyMovement enemyMovement;
+	protected EnemyType enemyType;
+	protected TouchType touchType;
 	int time = 0;
 
 	public Enemy(Stage s, int x, int y, EnemyType et, EnemyMovement em) {
@@ -15,22 +17,26 @@ public class Enemy extends Actor {
 	}
 
 	public Enemy(Stage s, String img, int x, int y, EnemyType et, TouchType tt, EnemyMovement em) {
-		setStage(s);
-
+		setEnemyType(et);
 		setTouchType(tt);
+		
+		setStage(s);
 
 		setImgRight(new ImageIcon(img));
 		setX(x);
-
-		setWidth(et.getWidth());
-		setHeight(et.getHeight());
 
 		setY(y + Block.BLOCK_SIZE - et.getHeight());
 
 		setMovementSpeedX(0);
 		setMovementSpeedY(0);
-		enemyMovement = em;
+	}
 
+	private void setEnemyType(EnemyType et) {
+		enemyType = et;
+
+		setWidth(et.getWidth());
+		setHeight(et.getHeight());
+		
 	}
 
 	@Override
@@ -57,5 +63,13 @@ public class Enemy extends Actor {
 	
 	public static int getDataSize() {
 		return 2;
+	}
+	
+	public EnemyType getEnemyType() {
+		return enemyType;
+	}
+	
+	public EnemyMovement getEnemyMovement() {
+		return enemyMovement;
 	}
 }

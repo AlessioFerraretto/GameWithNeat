@@ -1,6 +1,7 @@
 package creator;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import game.Enemy;
 import game.Stage;
 import game.StageOne;
 
-public class Panel extends JPanel implements SelectEvent {
+public class Panel extends JPanel implements PanelEvent {
 
 	private Stage stage;
 
@@ -32,6 +33,23 @@ public class Panel extends JPanel implements SelectEvent {
 
 		setFocusable(true);
 		requestFocus();
+
+		addMouseMotionListener(new MouseAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if(selected == null) return;
+
+				int x = (int) e.getX();
+				int y = (int) e.getY();
+
+				int i = x / Block.BLOCK_SIZE;
+				int j = y / Block.BLOCK_SIZE;
+
+				stage.sostituisci(i, j, selected);
+				f.repaint();
+			}
+		});
+
 		addMouseListener(new MouseListener() {
 
 			@Override
@@ -42,7 +60,6 @@ public class Panel extends JPanel implements SelectEvent {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -61,7 +78,7 @@ public class Panel extends JPanel implements SelectEvent {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(selected == null) return;
-				
+
 				int x = (int) e.getX();
 				int y = (int) e.getY();
 
@@ -69,8 +86,8 @@ public class Panel extends JPanel implements SelectEvent {
 				int j = y / Block.BLOCK_SIZE;
 
 				stage.sostituisci(i, j, selected);
-				selected = null;
 				f.repaint();
+
 			}
 		});
 	}
@@ -98,6 +115,16 @@ public class Panel extends JPanel implements SelectEvent {
 	public void selected(BaseActor e) {
 		selected  = e;
 
+	}
+
+	@Override
+	public void printStage() {
+		stage.printStage();
+	}
+
+	@Override
+	public void printEnemies() {
+		stage.printEnemies();
 	}
 
 }
